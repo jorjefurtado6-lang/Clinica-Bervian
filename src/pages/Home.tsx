@@ -7,57 +7,80 @@ export function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-white/40 to-transparent pt-16 pb-24 md:pt-24 md:pb-32">
-        <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="inline-block px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold uppercase rounded-full mb-6">
-              Referência em Ijuí/RS
-            </span>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-primary leading-[1.1] font-serif mb-6">
-              Segurança e <span className="font-bold block italic">Saúde Ocupacional</span>
-            </h1>
-            <p className="text-lg md:text-xl text-footer mb-10 max-w-xl leading-relaxed">
-              Garantimos a conformidade legal da sua empresa com agilidade técnica e atendimento humanizado.
-            </p>
-            <div className="flex flex-col sm:flex-row items-start gap-4">
-              <Link
-                to="/contato"
-                className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl bg-primary px-8 py-4 text-base font-bold text-white shadow-lg hover:scale-105 transition-transform"
-              >
-                Solicitar Orçamento
-              </Link>
-              <Link
-                to="/area-cliente"
-                className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border-2 border-secondary bg-white px-8 py-4 text-base font-bold text-secondary hover:bg-gray-50 transition-colors"
-              >
-                WhatsApp
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-3 gap-6 pt-12 mt-12 border-t border-secondary/20 max-w-2xl">
-              <div>
-                <p className="text-3xl font-bold text-primary">500+</p>
-                <p className="text-xs text-secondary uppercase font-semibold">Empresas Atendidas</p>
+        <div className="container relative mx-auto px-4 sm:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="inline-block px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold uppercase rounded-full mb-6">
+                Referência em Ijuí/RS
+              </span>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-primary leading-[1.1] font-serif mb-6">
+                Segurança e <span className="font-bold block italic">Saúde Ocupacional</span>
+              </h1>
+              <p className="text-lg md:text-xl text-footer mb-10 max-w-xl leading-relaxed">
+                Garantimos a conformidade legal da sua empresa com agilidade técnica e atendimento humanizado.
+              </p>
+              <div className="flex flex-col sm:flex-row items-start gap-4">
+                <Link
+                  to="/contato"
+                  className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl bg-primary px-8 py-4 text-base font-bold text-white shadow-lg hover:scale-105 transition-transform"
+                >
+                  Solicitar Orçamento
+                </Link>
+                <Link
+                  to="/area-cliente"
+                  className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border-2 border-secondary bg-white px-8 py-4 text-base font-bold text-secondary hover:bg-gray-50 transition-colors"
+                >
+                  WhatsApp
+                </Link>
               </div>
-              <div>
-                <p className="text-3xl font-bold text-primary">24h</p>
-                <p className="text-xs text-secondary uppercase font-semibold">Retorno Orçamento</p>
+              
+              <div className="grid grid-cols-3 gap-6 pt-12 mt-12 border-t border-secondary/20 max-w-2xl">
+                <div>
+                  <p className="text-3xl font-bold text-primary">500+</p>
+                  <p className="text-xs text-secondary uppercase font-semibold">Empresas Atendidas</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-primary">24h</p>
+                  <p className="text-xs text-secondary uppercase font-semibold">Retorno Orçamento</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-primary">100%</p>
+                  <p className="text-xs text-secondary uppercase font-semibold">E-Social Pronto</p>
+                </div>
               </div>
-              <div>
-                <p className="text-3xl font-bold text-primary">100%</p>
-                <p className="text-xs text-secondary uppercase font-semibold">E-Social Pronto</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative hidden md:block"
+            >
+              <div className="relative z-10 w-full h-[400px] lg:h-[500px]">
+                {/* Illustration Placeholder - Using a relevant medical/safety vector placeholder image */}
+                <img 
+                  src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=800" 
+                  alt="Ilustração Medicina do Trabalho"
+                  className="w-full h-full object-cover rounded-3xl shadow-2xl border-8 border-white"
+                  referrerPolicy="no-referrer"
+                />
+                
+                {/* Decorative Elements */}
+                <div className="absolute -top-6 -right-6 w-32 h-32 bg-secondary/10 rounded-full blur-2xl animate-pulse"></div>
+                <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Services Summary */}
       <section className="py-20 bg-transparent">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4 sm:px-8">
           <div className="mb-12">
             <h2 className="text-primary font-bold text-sm uppercase tracking-widest mb-4 border-b border-secondary/10 pb-4 inline-block">Nossas Soluções</h2>
           </div>
