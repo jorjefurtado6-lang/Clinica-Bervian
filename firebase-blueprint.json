@@ -1,0 +1,76 @@
+{
+  "entities": {
+    "Post": {
+      "title": "Post",
+      "description": "A blog post.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "category": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "authorId": { "type": "string" }
+      },
+      "required": ["title", "content", "excerpt", "category", "createdAt", "updatedAt", "authorId"]
+    },
+    "Service": {
+      "title": "Service",
+      "description": "A clinic service.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "icon": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["title", "description", "createdAt", "updatedAt"]
+    },
+    "Specialist": {
+      "title": "Specialist",
+      "description": "A clinic specialist.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "bio": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "instagramUrl": { "type": "string" },
+        "linkedinUrl": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "role", "bio", "createdAt", "updatedAt"]
+    },
+    "AdminConfig": {
+      "title": "AdminConfig",
+      "description": "An admin configuration document representing an admin user.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" }
+      },
+      "required": ["email"]
+    }
+  },
+  "firestore": {
+    "/posts/{postId}": {
+      "schema": { "$ref": "#/entities/Post" },
+      "description": "Collection of blog posts."
+    },
+    "/admins/{userId}": {
+      "schema": { "$ref": "#/entities/AdminConfig" },
+      "description": "Collection defining admin privileges by user ID."
+    },
+    "/services/{serviceId}": {
+      "schema": { "$ref": "#/entities/Service" },
+      "description": "Collection of clinic services."
+    },
+    "/specialists/{specialistId}": {
+      "schema": { "$ref": "#/entities/Specialist" },
+      "description": "Collection of clinic specialists."
+    }
+  }
+}

@@ -1,0 +1,101 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isSignedIn() { return request.auth != null; }
+    function isVerified() { return request.auth.token.email_verified == true; }
+    
+    function isAdmin() {
+      return isSignedIn() && (
+        (isVerified() && request.auth.token.email == 'jorjefurtado6@gmail.com') ||
+        request.auth.token.email == 'clinica25@clinica.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+    
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    
+    function isValidPost(data) {
+      let hasRequired = data.keys().hasAll(['title', 'content', 'excerpt', 'category', 'createdAt', 'updatedAt', 'authorId']);
+      let validTitle = data.title is string && data.title.size() <= 200;
+      let validContent = data.content is string && data.content.size() <= 100000;
+      let validExcerpt = data.excerpt is string && data.excerpt.size() <= 500;
+      let validCategory = data.category is string && data.category.size() <= 100;
+      let validAuthor = data.authorId is string && data.authorId.size() <= 128;
+      let validOptional = (!('imageUrl' in data) || (data.imageUrl is string && data.imageUrl.size() <= 1000));
+      return hasRequired && validTitle && validContent && validExcerpt && validCategory && validAuthor && validOptional && data.keys().size() >= 7 && data.keys().size() <= 8;
+    }
+
+    function isValidService(data) {
+      let hasRequired = data.keys().hasAll(['title', 'description', 'createdAt', 'updatedAt']);
+      let validTitle = data.title is string && data.title.size() <= 200;
+      let validDescription = data.description is string && data.description.size() <= 10000;
+      let validOptional = (!('icon' in data) || (data.icon is string && data.icon.size() <= 1000));
+      return hasRequired && validTitle && validDescription && validOptional && data.keys().size() >= 4 && data.keys().size() <= 5;
+    }
+
+    function isValidSpecialist(data) {
+      let hasRequired = data.keys().hasAll(['name', 'role', 'bio', 'createdAt', 'updatedAt']);
+      let validName = data.name is string && data.name.size() <= 200;
+      let validRole = data.role is string && data.role.size() <= 200;
+      let validBio = data.bio is string && data.bio.size() <= 10000;
+      let validImageUrl = (!('imageUrl' in data) || (data.imageUrl is string && data.imageUrl.size() <= 1000));
+      let validInstagram = (!('instagramUrl' in data) || (data.instagramUrl is string && data.instagramUrl.size() <= 1000));
+      let validLinkedin = (!('linkedinUrl' in data) || (data.linkedinUrl is string && data.linkedinUrl.size() <= 1000));
+      return hasRequired && validName && validRole && validBio && validImageUrl && validInstagram && validLinkedin && data.keys().size() >= 5 && data.keys().size() <= 8;
+    }
+    
+    match /admins/{userId} {
+      allow read: if isAdmin();
+    }
+    
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidId(postId) &&
+                       isValidPost(incoming()) &&
+                       incoming().createdAt == request.time &&
+                       incoming().updatedAt == request.time &&
+                       incoming().authorId == request.auth.uid;
+      allow update: if isAdmin() && isValidId(postId) &&
+                       isValidPost(incoming()) &&
+                       incoming().diff(existing()).affectedKeys().hasOnly(['title', 'content', 'excerpt', 'category', 'imageUrl', 'updatedAt']) &&
+                       incoming().updatedAt == request.time &&
+                       incoming().authorId == existing().authorId &&
+                       incoming().createdAt == existing().createdAt;
+      allow delete: if isAdmin() && isValidId(postId);
+    }
+
+    match /services/{serviceId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidId(serviceId) &&
+                       isValidService(incoming()) &&
+                       incoming().createdAt == request.time &&
+                       incoming().updatedAt == request.time;
+      allow update: if isAdmin() && isValidId(serviceId) &&
+                       isValidService(incoming()) &&
+                       incoming().diff(existing()).affectedKeys().hasOnly(['title', 'description', 'icon', 'updatedAt']) &&
+                       incoming().updatedAt == request.time &&
+                       incoming().createdAt == existing().createdAt;
+      allow delete: if isAdmin() && isValidId(serviceId);
+    }
+
+    match /specialists/{specialistId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidId(specialistId) &&
+                       isValidSpecialist(incoming()) &&
+                       incoming().createdAt == request.time &&
+                       incoming().updatedAt == request.time;
+      allow update: if isAdmin() && isValidId(specialistId) &&
+                       isValidSpecialist(incoming()) &&
+                       incoming().diff(existing()).affectedKeys().hasOnly(['name', 'role', 'bio', 'imageUrl', 'instagramUrl', 'linkedinUrl', 'updatedAt']) &&
+                       incoming().updatedAt == request.time &&
+                       incoming().createdAt == existing().createdAt;
+      allow delete: if isAdmin() && isValidId(specialistId);
+    }
+  }
+}
