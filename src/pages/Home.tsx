@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { professionals } from '../data/professionals';
 import { testimonials } from '../data/testimonials';
 import { faqs } from '../data/faqs';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { mockPosts } from '../data/mockPosts';
@@ -43,6 +43,54 @@ const FaqItem = ({ question, answer }: { question: string, answer: string }) => 
 export function Home() {
   const [recentPosts, setRecentPosts] = useState<any[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
+
+  const teamScrollRef = useRef<HTMLDivElement>(null);
+  const testimonialsScrollRef = useRef<HTMLDivElement>(null);
+  const [isTeamPaused, setIsTeamPaused] = useState(false);
+  const [isTestimonialsPaused, setIsTestimonialsPaused] = useState(false);
+
+  // Auto-scroll logic for team
+  useEffect(() => {
+    if (isTeamPaused) return;
+    const container = teamScrollRef.current;
+    if (!container) return;
+
+    const interval = setInterval(() => {
+      // Check if horizontal scroll is currently active (mobile view)
+      if (container.scrollWidth <= container.clientWidth) return;
+      
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+      if (container.scrollLeft >= maxScrollLeft - 10) {
+        container.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        const child = container.firstElementChild as HTMLElement;
+        const scrollAmount = child ? child.offsetWidth + 24 : container.clientWidth * 0.85;
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isTeamPaused]);
+
+  // Auto-scroll logic for testimonials
+  useEffect(() => {
+    if (isTestimonialsPaused) return;
+    const container = testimonialsScrollRef.current;
+    if (!container) return;
+
+    const interval = setInterval(() => {
+      if (container.scrollWidth <= container.clientWidth) return;
+      
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+      if (container.scrollLeft >= maxScrollLeft - 10) {
+        container.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        const child = container.firstElementChild as HTMLElement;
+        const scrollAmount = child ? child.offsetWidth + 24 : container.clientWidth * 0.85;
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [isTestimonialsPaused]);
 
   useEffect(() => {
     const fetchRecentPosts = async () => {
@@ -206,7 +254,15 @@ export function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div 
+            ref={teamScrollRef}
+            onMouseEnter={() => setIsTeamPaused(true)}
+            onMouseLeave={() => setIsTeamPaused(false)}
+            onTouchStart={() => setIsTeamPaused(true)}
+            onTouchEnd={() => { setTimeout(() => setIsTeamPaused(false), 4000) }}
+            onClick={() => setIsTeamPaused(!isTeamPaused)}
+            className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+          >
             {professionals.map((prof, index) => (
               <motion.div 
                 key={prof.id}
@@ -214,6 +270,7 @@ export function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
+                className="shrink-0 w-[85%] sm:w-auto snap-center"
               >
                 <Link 
                   to={`/profissional/${prof.id}`}
@@ -251,7 +308,15 @@ export function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div 
+            ref={testimonialsScrollRef}
+            onMouseEnter={() => setIsTestimonialsPaused(true)}
+            onMouseLeave={() => setIsTestimonialsPaused(false)}
+            onTouchStart={() => setIsTestimonialsPaused(true)}
+            onTouchEnd={() => { setTimeout(() => setIsTestimonialsPaused(false), 4000) }}
+            onClick={() => setIsTestimonialsPaused(!isTestimonialsPaused)}
+            className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 -mx-4 px-4 md:mx-0 md:px-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          >
             {testimonials.map((testimonial, index) => (
               <motion.div 
                 key={testimonial.id}
@@ -259,7 +324,7 @@ export function Home() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white p-8 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex flex-col"
+                className="shrink-0 w-[85%] md:w-auto snap-center bg-white p-8 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex flex-col"
               >
                 <div className="flex text-yellow-400 mb-4 gap-1">
                   {[...Array(testimonial.rating)].map((_, i) => (
