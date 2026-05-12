@@ -3,6 +3,7 @@ import { Search, Tag, Calendar, User, ArrowRight } from 'lucide-react';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { Link } from 'react-router-dom';
+import { mockPosts } from '../data/mockPosts';
 
 export function Blog() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,9 +15,23 @@ export function Blog() {
       try {
         const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
         const qs = await getDocs(q);
-        setPosts(qs.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        const fetchedPosts = qs.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        
+        // Combine with mock posts if needed or just use both
+        // If there are no fetched posts, use mock posts. Otherwise simply append them.
+        const combined = [...fetchedPosts];
+        mockPosts.forEach(mock => {
+          if (!combined.some(p => p.id === mock.id)) {
+            combined.push(mock);
+          }
+        });
+        
+        // sort combined by createdAt desc
+        combined.sort((a, b) => Number(b.createdAt) - Number(a.createdAt));
+        setPosts(combined);
       } catch (e) {
         console.error(e);
+        setPosts(mockPosts); // Fallback to mock on error
       } finally {
         setLoading(false);
       }

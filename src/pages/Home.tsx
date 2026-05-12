@@ -1,8 +1,75 @@
-import { motion } from 'motion/react';
-import { ShieldCheck, Stethoscope, FileText, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ShieldCheck, Stethoscope, FileText, ArrowRight, Calendar, Tag, Star, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { professionals } from '../data/professionals';
+import { testimonials } from '../data/testimonials';
+import { faqs } from '../data/faqs';
+import { useEffect, useState } from 'react';
+import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
+import { db } from '../lib/firebase';
+import { mockPosts } from '../data/mockPosts';
+
+const FaqItem = ({ question, answer }: { question: string, answer: string }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="bg-white rounded-2xl shadow-sm border border-secondary/10 overflow-hidden transition-all hover:border-secondary/30">
+      <button 
+        onClick={() => setIsOpen(!isOpen)} 
+        className="flex justify-between items-center w-full p-6 text-left focus:outline-none"
+      >
+        <span className="font-bold text-primary pr-4">{question}</span>
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${isOpen ? 'bg-primary text-white' : 'bg-background text-secondary'}`}>
+          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        </div>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+          >
+            <div className="px-6 pb-6 text-sm text-footer leading-relaxed max-w-3xl">
+              {answer}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 export function Home() {
+  const [recentPosts, setRecentPosts] = useState<any[]>([]);
+  const [loadingPosts, setLoadingPosts] = useState(true);
+
+  useEffect(() => {
+    const fetchRecentPosts = async () => {
+      try {
+        const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(3));
+        const qs = await getDocs(q);
+        const fetchedPosts = qs.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        
+        const combined = [...fetchedPosts];
+        mockPosts.forEach(mock => {
+          if (!combined.some(p => p.id === mock.id)) {
+            combined.push(mock);
+          }
+        });
+        
+        combined.sort((a, b) => Number(b.createdAt) - Number(a.createdAt));
+        setRecentPosts(combined.slice(0, 3));
+      } catch (e) {
+        console.error(e);
+        setRecentPosts(mockPosts.slice(0, 3));
+      } finally {
+        setLoadingPosts(false);
+      }
+    };
+    fetchRecentPosts();
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -126,6 +193,155 @@ export function Home() {
               <div className="absolute -right-8 -bottom-8 w-40 h-40 bg-secondary opacity-20 rounded-full"></div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Nossa Equipe */}
+      <section className="py-20 bg-background/50 border-t border-secondary/10">
+        <div className="container mx-auto px-4 sm:px-8">
+          <div className="mb-12">
+            <h2 className="text-primary font-bold text-sm uppercase tracking-widest mb-4 border-b border-secondary/10 pb-4 inline-block">Nossa Equipe de Especialistas</h2>
+            <p className="text-footer max-w-2xl text-sm leading-relaxed mt-4">
+              Contamos com um corpo clínico altamente qualificado para garantir a saúde e a segurança no ambiente de trabalho da sua empresa.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {professionals.map((prof, index) => (
+              <motion.div 
+                key={prof.id}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Link 
+                  to={`/profissional/${prof.id}`}
+                  className="bg-white p-6 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 hover:-translate-y-1 transition-all flex items-center gap-6 block"
+                >
+                  <div className="w-20 h-20 shrink-0">
+                    <img 
+                      src={prof.image} 
+                      alt={prof.name} 
+                      className="w-full h-full object-cover rounded-full border-2 border-background shadow-sm"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-primary text-base leading-tight mb-1 group-hover:text-secondary transition-colors">{prof.name}</h3>
+                    <p className="text-footer text-xs font-medium mb-2">{prof.role}</p>
+                    <span className="inline-block px-2 py-0.5 bg-background text-footer/70 text-[10px] font-bold rounded-md">
+                      {prof.credential}
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Depoimentos */}
+      <section className="py-20 bg-background/30 border-t border-secondary/10">
+        <div className="container mx-auto px-4 sm:px-8">
+          <div className="mb-12 text-center md:text-left">
+            <h2 className="text-primary font-bold text-sm uppercase tracking-widest mb-4 border-b border-secondary/10 pb-4 inline-block">Depoimentos</h2>
+            <p className="text-footer max-w-2xl text-sm leading-relaxed mt-4 md:mx-0 mx-auto">
+              Veja o que nossos clientes dizem sobre a parceria com a Bervian para cuidar da saúde ocupacional da sua empresa.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <motion.div 
+                key={testimonial.id}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white p-8 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex flex-col"
+              >
+                <div className="flex text-yellow-400 mb-4 gap-1">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} size={16} fill="currentColor" />
+                  ))}
+                </div>
+                <p className="text-footer text-sm leading-relaxed mb-6 flex-1 italic">
+                  "{testimonial.content}"
+                </p>
+                <div className="border-t border-secondary/10 pt-4 mt-auto">
+                  <h4 className="font-bold text-primary text-sm">{testimonial.author}</h4>
+                  <p className="text-xs text-footer/80 font-medium">{testimonial.role} - <span className="text-secondary">{testimonial.company}</span></p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-background/50 border-t border-secondary/10">
+        <div className="container mx-auto px-4 sm:px-8 max-w-4xl">
+          <div className="mb-12 text-center">
+            <h2 className="text-primary font-bold text-sm uppercase tracking-widest mb-4 border-b border-secondary/10 pb-4 inline-block">Dúvidas Frequentes</h2>
+            <p className="text-footer text-sm leading-relaxed mt-4">
+              Encontre respostas para as principais dúvidas sobre nossos serviços de Medicina e Segurança do Trabalho.
+            </p>
+          </div>
+          
+          <div className="flex flex-col gap-4">
+            {faqs.map((faq, index) => (
+              <FaqItem key={index} question={faq.question} answer={faq.answer} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Últimos Artigos do Blog */}
+      <section className="py-20 bg-background border-t border-secondary/10">
+        <div className="container mx-auto px-4 sm:px-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 gap-6">
+            <div>
+              <h2 className="text-primary font-bold text-sm uppercase tracking-widest mb-4 border-b border-secondary/10 pb-4 inline-block">Blog & Notícias</h2>
+              <p className="text-footer max-w-2xl text-sm leading-relaxed mt-4">
+                Fique por dentro das novidades, exigências legais e dicas sobre medicina e segurança do trabalho.
+              </p>
+            </div>
+            <Link to="/blog" className="inline-flex items-center font-bold text-primary hover:text-secondary transition-colors text-xs uppercase tracking-wider whitespace-nowrap bg-white px-6 py-3 rounded-xl shadow-sm border border-secondary/10">
+              Ver todos os artigos <ArrowRight className="ml-2 w-4 h-4" />
+            </Link>
+          </div>
+          
+          {loadingPosts ? (
+            <div className="text-center py-10 text-footer">Carregando artigos...</div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {recentPosts.map((post) => (
+                <article key={post.id} className="bg-white rounded-3xl overflow-hidden shadow-sm border border-secondary/10 flex flex-col hover:border-secondary/30 transition-all group">
+                  <div className="h-48 overflow-hidden bg-background">
+                    {post.imageUrl ? (
+                      <img src={post.imageUrl} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-footer/20 bg-footer/5">Sem Imagem</div>
+                    )}
+                  </div>
+                  <div className="p-8 flex-1 flex flex-col">
+                    <div className="flex items-center gap-4 mb-3">
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-secondary bg-secondary/10 px-2 py-1 rounded-sm">
+                        <Tag size={10} /> {post.category}
+                      </span>
+                      <span className="text-[10px] font-medium uppercase tracking-widest text-footer/60">
+                        {new Date(post.createdAt || Date.now()).toLocaleDateString('pt-BR')}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-primary mb-3 leading-tight group-hover:text-secondary transition-colors cursor-pointer">{post.title}</h3>
+                    <p className="text-sm text-footer mb-6 flex-1">{post.excerpt}</p>
+                    <Link to="/blog" className="text-primary font-bold text-xs uppercase tracking-wider w-fit hover:text-secondary transition-colors">Ler artigo completo →</Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>

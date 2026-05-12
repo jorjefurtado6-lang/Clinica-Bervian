@@ -1,0 +1,50 @@
+export const testimonials = [
+  {
+    id: 1,
+    author: "Carlos Silva",
+    company: "Construtora Alfa",
+    content: "A Bervian transformou a gestão de SST da nossa construtora. O envio de eventos para o eSocial nunca foi tão fácil.",
+    role: "Diretor de RH",
+    rating: 5,
+  },
+  {
+    id: 2,
+    author: "Mariana Souza",
+    company: "Indústria Beta",
+    content: "Atendimento excepcional e laudos sempre no prazo. Nossa empresa reduziu significativamente os acidentes de trabalho com o PGR desenhado pela equipe.",
+    role: "Técnica de Segurança",
+    rating: 5,
+  },
+  {
+    id: 3,
+    author: "Ricardo Oliveira",
+    company: "Rede de Supermercados Local",
+    content: "Os exames periódicos são realizados com muita agilidade. O portal do cliente facilita imensamente o acompanhamento dos atestados dos colaboradores.",
+    role: "Gerente Operacional",
+    rating: 5,
+  },
+  {
+    id: 4,
+    author: "Fernanda Costa",
+    company: "Transportes Logística",
+    content: "A equipe clínica é altamente capacitada. Todo o suporte nos treinamentos e emissão de ASOs trouxe muita segurança jurídica para nossa transportadora.",
+    role: "Coordenadora de RH",
+    rating: 5,
+  },
+  {
+    id: 5,
+    author: "João Mendes",
+    company: "Metalúrgica Ferro",
+    content: "Excelente parceria. A clínica cuida de toda a parte de insalubridade e LTCAT com precisão. Encontramos todo o apoio técnico que precisávamos.",
+    role: "Sócio Diretor",
+    rating: 5,
+  },
+  {
+    id: 6,
+    author: "Alice Ferreira",
+    company: "Rede de Farmácias",
+    content: "Serviço de altíssima qualidade. A implantação do SST era um desafio e a Bervian nos trouxe tranquilidade absoluta durante todo o processo.",
+    role: "Analista de DP",
+    rating: 5,
+  }
+];

@@ -12,6 +12,7 @@ import { Services } from './pages/Services';
 import { Blog } from './pages/Blog';
 import { Contact } from './pages/Contact';
 import { ClientArea } from './pages/ClientArea';
+import { ProfissionalProfile } from './pages/ProfissionalProfile';
 import { AdminLayout } from './pages/admin/AdminLayout';
 import { AdminLogin } from './pages/admin/AdminLogin';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/contato" element={<Contact />} />
             <Route path="/area-cliente" element={<ClientArea />} />
+            <Route path="/profissional/:id" element={<ProfissionalProfile />} />
           </Route>
 
           {/* Admin Routes */}

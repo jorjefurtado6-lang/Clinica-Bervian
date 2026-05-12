@@ -33,6 +33,7 @@ export function Footer() {
               <li><Link to="/servicos" className="text-sm text-background/70 hover:text-white transition-colors font-light">Nossos Serviços</Link></li>
               <li><Link to="/blog" className="text-sm text-background/70 hover:text-white transition-colors font-light">Blog e Artigos</Link></li>
               <li><Link to="/area-cliente" className="text-sm text-background/70 hover:text-white transition-colors font-light">Acesso ao Sistema (ESO)</Link></li>
+              <li><Link to="/admin" className="text-sm text-background/70 hover:text-white transition-colors font-light">Admin</Link></li>
             </ul>
           </div>
 
@@ -76,7 +77,6 @@ export function Footer() {
           </p>
           <div className="flex gap-4">
             <Link to="/privacidade" className="text-[10px] text-white/50 uppercase tracking-widest font-medium hover:text-white transition-colors">Privacidade</Link>
-            <Link to="/admin" className="text-[10px] text-white/50 uppercase tracking-widest font-medium hover:text-white transition-colors">Admin</Link>
           </div>
         </div>
       </div>
