@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'motion/react';
 const navLinks = [
   { path: '/', label: 'Home' },
   { path: '/clinica', label: 'A Clínica' },
+  { path: '/solucoes', label: 'Nossas Soluções' },
   { path: '/servicos', label: 'Serviços' },
   { path: '/blog', label: 'Blog' },
   { path: '/contato', label: 'Orçamento e Agendamento' },

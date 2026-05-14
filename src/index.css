@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -9,10 +10,17 @@
   
   --color-primary-foreground: #FFFFFF;
   --color-secondary-foreground: #FFFFFF;
+
+  --font-sans: "Open Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: "Montserrat", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
 }
 
 body {
-  @apply bg-background text-foreground;
+  @apply bg-background text-foreground font-sans;
 }
 
 .hide-scrollbar::-webkit-scrollbar {

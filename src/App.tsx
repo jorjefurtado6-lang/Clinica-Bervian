@@ -13,6 +13,7 @@ import { Blog } from './pages/Blog';
 import { Contact } from './pages/Contact';
 import { ClientArea } from './pages/ClientArea';
 import { ProfissionalProfile } from './pages/ProfissionalProfile';
+import { Solutions } from './pages/Solutions';
 import { AdminLayout } from './pages/admin/AdminLayout';
 import { AdminLogin } from './pages/admin/AdminLogin';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
@@ -22,16 +23,19 @@ import { AdminServices } from './pages/admin/AdminServices';
 import { AdminServiceEditor } from './pages/admin/AdminServiceEditor';
 import { AdminSpecialists } from './pages/admin/AdminSpecialists';
 import { AdminSpecialistEditor } from './pages/admin/AdminSpecialistEditor';
+import { ScrollToTop } from './components/ScrollToTop';
 
 export default function App() {
   return (
     <Router>
+      <ScrollToTop />
       <AuthProvider>
         <Routes>
           {/* Public Routes with standard Layout */}
           <Route element={<Layout><Outlet /></Layout>}>
             <Route path="/" element={<Home />} />
             <Route path="/clinica" element={<Clinic />} />
+            <Route path="/solucoes" element={<Solutions />} />
             <Route path="/servicos" element={<Services />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/contato" element={<Contact />} />

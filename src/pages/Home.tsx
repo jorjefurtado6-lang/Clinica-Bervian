@@ -4,12 +4,21 @@ import { Link } from 'react-router-dom';
 import { professionals } from '../data/professionals';
 import { testimonials } from '../data/testimonials';
 import { faqs } from '../data/faqs';
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { mockPosts } from '../data/mockPosts';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  CarouselDots
+} from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
 
-const FaqItem = ({ question, answer }: { question: string, answer: string }) => {
+const FaqItem: React.FC<{ question: string, answer: string }> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-secondary/10 overflow-hidden transition-all hover:border-secondary/30">
@@ -44,53 +53,11 @@ export function Home() {
   const [recentPosts, setRecentPosts] = useState<any[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
 
-  const teamScrollRef = useRef<HTMLDivElement>(null);
-  const testimonialsScrollRef = useRef<HTMLDivElement>(null);
-  const [isTeamPaused, setIsTeamPaused] = useState(false);
-  const [isTestimonialsPaused, setIsTestimonialsPaused] = useState(false);
+  const heroPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
+  const solutionsPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
 
-  // Auto-scroll logic for team
-  useEffect(() => {
-    if (isTeamPaused) return;
-    const container = teamScrollRef.current;
-    if (!container) return;
-
-    const interval = setInterval(() => {
-      // Check if horizontal scroll is currently active (mobile view)
-      if (container.scrollWidth <= container.clientWidth) return;
-      
-      const maxScrollLeft = container.scrollWidth - container.clientWidth;
-      if (container.scrollLeft >= maxScrollLeft - 10) {
-        container.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        const child = container.firstElementChild as HTMLElement;
-        const scrollAmount = child ? child.offsetWidth + 24 : container.clientWidth * 0.85;
-        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      }
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [isTeamPaused]);
-
-  // Auto-scroll logic for testimonials
-  useEffect(() => {
-    if (isTestimonialsPaused) return;
-    const container = testimonialsScrollRef.current;
-    if (!container) return;
-
-    const interval = setInterval(() => {
-      if (container.scrollWidth <= container.clientWidth) return;
-      
-      const maxScrollLeft = container.scrollWidth - container.clientWidth;
-      if (container.scrollLeft >= maxScrollLeft - 10) {
-        container.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        const child = container.firstElementChild as HTMLElement;
-        const scrollAmount = child ? child.offsetWidth + 24 : container.clientWidth * 0.85;
-        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      }
-    }, 3500);
-    return () => clearInterval(interval);
-  }, [isTestimonialsPaused]);
+  const teamPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
+  const testimonialsPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
 
   useEffect(() => {
     const fetchRecentPosts = async () => {
@@ -106,7 +73,7 @@ export function Home() {
           }
         });
         
-        combined.sort((a, b) => Number(b.createdAt) - Number(a.createdAt));
+        combined.sort((a: any, b: any) => Number(b.createdAt) - Number(a.createdAt));
         setRecentPosts(combined.slice(0, 3));
       } catch (e) {
         console.error(e);
@@ -200,34 +167,98 @@ export function Home() {
             <h2 className="text-primary font-bold text-sm uppercase tracking-widest mb-4 border-b border-secondary/10 pb-4 inline-block">Nossas Soluções</h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="md:hidden">
+            <Carousel 
+              plugins={[solutionsPlugin.current]}
+              className="w-full relative" 
+              opts={{ align: "start", loop: true }}
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                <CarouselItem className="pl-2 md:pl-4 basis-[85%] flex">
+                  <div className="w-full p-8 rounded-3xl bg-white shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex flex-col">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center shrink-0">
+                        <Stethoscope className="w-6 h-6 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-bold text-primary">Medicina Ocupacional</h3>
+                    </div>
+                    <p className="text-footer mb-6 text-sm flex-1">Gestão completa de exames clínicos admissionais, demissionais, periódicos, de mudança de risco e retorno ao trabalho.</p>
+                    <Link to="/servicos" className="inline-flex items-center font-bold text-primary hover:text-secondary transition-colors text-xs uppercase tracking-wider">
+                      Saiba mais <ArrowRight className="ml-2 w-4 h-4" />
+                    </Link>
+                  </div>
+                </CarouselItem>
+
+                <CarouselItem className="pl-2 md:pl-4 basis-[85%] flex">
+                  <div className="w-full p-8 rounded-3xl bg-white shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex flex-col">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center shrink-0">
+                        <FileText className="w-6 h-6 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-bold text-primary">Segurança do Trabalho</h3>
+                    </div>
+                    <p className="text-footer mb-6 text-sm flex-1">Elaboração de programas (PGR / PCMSO), laudos técnicos (LTCAT, LIP) e gestão de riscos ocupacionais.</p>
+                    <Link to="/servicos" className="inline-flex items-center font-bold text-primary hover:text-secondary transition-colors text-xs uppercase tracking-wider">
+                      Saiba mais <ArrowRight className="ml-2 w-4 h-4" />
+                    </Link>
+                  </div>
+                </CarouselItem>
+
+                <CarouselItem className="pl-2 md:pl-4 basis-[85%] flex">
+                  <div className="w-full bg-primary p-8 rounded-3xl text-white relative overflow-hidden flex flex-col justify-between hover:shadow-lg transition-transform">
+                    <div className="relative z-10">
+                      <p className="text-[10px] uppercase tracking-widest opacity-70 mb-2">Acesso Rápido</p>
+                      <h4 className="text-2xl font-bold mb-4">Portal do Cliente</h4>
+                      <p className="text-sm opacity-90 leading-relaxed mb-6">
+                        Gerencie seus atestados e acompanhe nossa inteligência artificial IA Bervian.
+                      </p>
+                    </div>
+                    <Link to="/area-cliente" className="relative z-10 inline-block bg-white w-fit text-primary px-6 py-3 rounded-full text-xs font-bold shadow-sm hover:bg-gray-100 transition-colors">
+                      Acessar agora →
+                    </Link>
+                    <div className="absolute right-[-40px] bottom-[-40px] opacity-10">
+                      <ShieldCheck className="w-48 h-48" />
+                    </div>
+                  </div>
+                </CarouselItem>
+              </CarouselContent>
+              
+              <div className="flex items-center justify-center gap-4 mt-8">
+                <CarouselPrevious className="static translate-y-0" />
+                <CarouselDots />
+                <CarouselNext className="static translate-y-0" />
+              </div>
+            </Carousel>
+          </div>
+
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             <div className="p-8 rounded-3xl bg-white shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex flex-col">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center shrink-0">
                   <Stethoscope className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-lg font-bold text-primary">Exames Ocupacionais</h3>
+                <h3 className="text-lg font-bold text-primary">Medicina Ocupacional</h3>
               </div>
-              <p className="text-footer mb-6 text-sm flex-1">Gestão completa de ASOs: Admissional, Demissional, Periódico, Retorno ao Trabalho e Mudança de Risco.</p>
+              <p className="text-footer mb-6 text-sm flex-1">Gestão completa de exames clínicos admissionais, demissionais, periódicos, de mudança de risco e retorno ao trabalho.</p>
               <Link to="/servicos" className="inline-flex items-center font-bold text-primary hover:text-secondary transition-colors text-xs uppercase tracking-wider">
                 Saiba mais <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </div>
 
-            <div className="p-8 rounded-3xl bg-white shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex flex-col">
+            <div className="shrink-0 w-[85%] md:w-auto snap-center p-8 rounded-3xl bg-white shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex flex-col">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center shrink-0">
                   <FileText className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-lg font-bold text-primary">Programas (PGR/PCMSO)</h3>
+                <h3 className="text-lg font-bold text-primary">Segurança do Trabalho</h3>
               </div>
-              <p className="text-footer mb-6 text-sm flex-1">Elaboração e coordenação de documentos técnicos obrigatórios com integração ao eSocial.</p>
+              <p className="text-footer mb-6 text-sm flex-1">Elaboração de programas (PGR / PCMSO), laudos técnicos (LTCAT, LIP) e gestão de riscos ocupacionais.</p>
               <Link to="/servicos" className="inline-flex items-center font-bold text-primary hover:text-secondary transition-colors text-xs uppercase tracking-wider">
                 Saiba mais <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </div>
 
-            <div className="bg-primary p-8 rounded-3xl text-white relative overflow-hidden flex flex-col justify-between hover:shadow-lg transition-transform">
+            <div className="shrink-0 w-[85%] md:w-auto snap-center bg-primary p-8 rounded-3xl text-white relative overflow-hidden flex flex-col justify-between hover:shadow-lg transition-transform">
               <div className="relative z-10">
                 <p className="text-[10px] uppercase tracking-widest opacity-70 mb-2">Acesso Rápido</p>
                 <h4 className="text-2xl font-bold mb-4">Portal do Cliente</h4>
@@ -254,15 +285,47 @@ export function Home() {
             </p>
           </div>
           
-          <div 
-            ref={teamScrollRef}
-            onMouseEnter={() => setIsTeamPaused(true)}
-            onMouseLeave={() => setIsTeamPaused(false)}
-            onTouchStart={() => setIsTeamPaused(true)}
-            onTouchEnd={() => { setTimeout(() => setIsTeamPaused(false), 4000) }}
-            onClick={() => setIsTeamPaused(!isTeamPaused)}
-            className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-          >
+          <div className="md:hidden">
+            <Carousel 
+              plugins={[teamPlugin.current]}
+              className="w-full relative" 
+              opts={{ align: "start", loop: true }}
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {professionals.map((prof, index) => (
+                  <CarouselItem key={prof.id} className="pl-2 md:pl-4 basis-[85%]">
+                    <Link 
+                      to={`/profissional/${prof.id}`}
+                      className="bg-white p-6 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 hover:-translate-y-1 transition-all flex items-center gap-6 block h-full group"
+                    >
+                      <div className="w-20 h-20 shrink-0">
+                        <img 
+                          src={prof.image} 
+                          alt={prof.name} 
+                          className="w-full h-full object-cover rounded-full border-2 border-background shadow-sm"
+                          referrerPolicy="no-referrer"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-primary text-base leading-tight mb-1 group-hover:text-secondary transition-colors">{prof.name}</h3>
+                        <p className="text-footer text-xs font-medium mb-2">{prof.role}</p>
+                        <span className="inline-block px-2 py-0.5 bg-background text-footer/70 text-[10px] font-bold rounded-md">
+                          {prof.credential}
+                        </span>
+                      </div>
+                    </Link>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="flex items-center justify-center gap-4 mt-8">
+                <CarouselPrevious className="static translate-y-0" />
+                <CarouselDots />
+                <CarouselNext className="static translate-y-0" />
+              </div>
+            </Carousel>
+          </div>
+
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {professionals.map((prof, index) => (
               <motion.div 
                 key={prof.id}
@@ -270,11 +333,10 @@ export function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="shrink-0 w-[85%] sm:w-auto snap-center"
               >
                 <Link 
                   to={`/profissional/${prof.id}`}
-                  className="bg-white p-6 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 hover:-translate-y-1 transition-all flex items-center gap-6 block"
+                  className="bg-white p-6 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 hover:-translate-y-1 transition-all flex items-center gap-6 block group"
                 >
                   <div className="w-20 h-20 shrink-0">
                     <img 
@@ -308,15 +370,41 @@ export function Home() {
             </p>
           </div>
           
-          <div 
-            ref={testimonialsScrollRef}
-            onMouseEnter={() => setIsTestimonialsPaused(true)}
-            onMouseLeave={() => setIsTestimonialsPaused(false)}
-            onTouchStart={() => setIsTestimonialsPaused(true)}
-            onTouchEnd={() => { setTimeout(() => setIsTestimonialsPaused(false), 4000) }}
-            onClick={() => setIsTestimonialsPaused(!isTestimonialsPaused)}
-            className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 -mx-4 px-4 md:mx-0 md:px-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-          >
+          <div className="md:hidden">
+            <Carousel 
+              plugins={[testimonialsPlugin.current]}
+              className="w-full relative" 
+              opts={{ align: "start", loop: true }}
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {testimonials.map((testimonial, index) => (
+                  <CarouselItem key={testimonial.id} className="pl-2 md:pl-4 basis-[85%] flex">
+                    <div className="bg-white p-8 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex flex-col w-full">
+                      <div className="flex text-yellow-400 mb-4 gap-1">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} size={16} fill="currentColor" />
+                        ))}
+                      </div>
+                      <p className="text-footer text-sm leading-relaxed mb-6 flex-1 italic">
+                        "{testimonial.content}"
+                      </p>
+                      <div className="border-t border-secondary/10 pt-4 mt-auto">
+                        <h4 className="font-bold text-primary text-sm">{testimonial.author}</h4>
+                        <p className="text-xs text-footer/80 font-medium">{testimonial.role} - <span className="text-secondary">{testimonial.company}</span></p>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="flex items-center justify-center gap-4 mt-8">
+                <CarouselPrevious className="static translate-y-0" />
+                <CarouselDots />
+                <CarouselNext className="static translate-y-0" />
+              </div>
+            </Carousel>
+          </div>
+
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {testimonials.map((testimonial, index) => (
               <motion.div 
                 key={testimonial.id}
@@ -324,7 +412,7 @@ export function Home() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="shrink-0 w-[85%] md:w-auto snap-center bg-white p-8 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex flex-col"
+                className="bg-white p-8 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex flex-col"
               >
                 <div className="flex text-yellow-400 mb-4 gap-1">
                   {[...Array(testimonial.rating)].map((_, i) => (

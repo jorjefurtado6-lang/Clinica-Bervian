@@ -27,7 +27,7 @@ export function Blog() {
         });
         
         // sort combined by createdAt desc
-        combined.sort((a, b) => Number(b.createdAt) - Number(a.createdAt));
+        combined.sort((a: any, b: any) => Number(b.createdAt) - Number(a.createdAt));
         setPosts(combined);
       } catch (e) {
         console.error(e);
