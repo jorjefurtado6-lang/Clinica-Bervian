@@ -10,6 +10,7 @@ import { Home } from './pages/Home';
 import { Clinic } from './pages/Clinic';
 import { Services } from './pages/Services';
 import { Blog } from './pages/Blog';
+import { Article } from './pages/Article';
 import { Contact } from './pages/Contact';
 import { ClientArea } from './pages/ClientArea';
 import { ProfissionalProfile } from './pages/ProfissionalProfile';
@@ -38,6 +39,7 @@ export default function App() {
             <Route path="/solucoes" element={<Solutions />} />
             <Route path="/servicos" element={<Services />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<Article />} />
             <Route path="/contato" element={<Contact />} />
             <Route path="/area-cliente" element={<ClientArea />} />
             <Route path="/profissional/:id" element={<ProfissionalProfile />} />

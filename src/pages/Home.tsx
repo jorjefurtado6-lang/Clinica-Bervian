@@ -521,7 +521,7 @@ export function Home() {
                     </div>
                     <h3 className="text-xl font-bold text-primary mb-3 leading-tight group-hover:text-secondary transition-colors cursor-pointer">{post.title}</h3>
                     <p className="text-sm text-footer mb-6 flex-1">{post.excerpt}</p>
-                    <Link to="/blog" className="text-primary font-bold text-xs uppercase tracking-wider w-fit hover:text-secondary transition-colors">Ler artigo completo →</Link>
+                    <Link to={`/blog/${post.id}`} className="text-primary font-bold text-xs uppercase tracking-wider w-fit hover:text-secondary transition-colors">Ler artigo completo →</Link>
                   </div>
                 </article>
               ))}
