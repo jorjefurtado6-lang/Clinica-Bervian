@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'motion/react';
-import { ShieldCheck, Stethoscope, FileText, ArrowRight, Calendar, Tag, Star, ChevronDown } from 'lucide-react';
+import { ShieldCheck, Stethoscope, FileText, ArrowRight, Calendar, Tag, Star, ChevronDown, Linkedin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { professionals } from '../data/professionals';
 import { testimonials } from '../data/testimonials';
@@ -294,26 +294,42 @@ export function Home() {
               <CarouselContent className="-ml-2 md:-ml-4">
                 {professionals.map((prof, index) => (
                   <CarouselItem key={prof.id} className="pl-2 md:pl-4 basis-[85%]">
-                    <Link 
-                      to={`/profissional/${prof.id}`}
-                      className="bg-white p-6 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 hover:-translate-y-1 transition-all flex items-center gap-6 block h-full group"
-                    >
-                      <div className="w-20 h-20 shrink-0">
+                    <div className="bg-white p-6 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex items-center gap-6 h-full group relative">
+                      <Link 
+                        to={`/profissional/${prof.id}`}
+                        className="w-20 h-20 shrink-0 block hover:opacity-80 transition-opacity"
+                      >
                         <img 
                           src={prof.image} 
                           alt={prof.name} 
                           className="w-full h-full object-cover rounded-full border-2 border-background shadow-sm"
                           referrerPolicy="no-referrer"
                         />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-primary text-base leading-tight mb-1 group-hover:text-secondary transition-colors">{prof.name}</h3>
+                      </Link>
+                      <div className="flex-1">
+                        <Link to={`/profissional/${prof.id}`} className="block">
+                          <h3 className="font-bold text-primary text-base leading-tight mb-1 group-hover:text-secondary transition-colors">{prof.name}</h3>
+                        </Link>
                         <p className="text-footer text-xs font-medium mb-2">{prof.role}</p>
-                        <span className="inline-block px-2 py-0.5 bg-background text-footer/70 text-[10px] font-bold rounded-md">
-                          {prof.credential}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="inline-block px-2 py-0.5 bg-background text-footer/70 text-[10px] font-bold rounded-md">
+                            {prof.credential}
+                          </span>
+                          {prof.linkedin && (
+                            <a 
+                              href={prof.linkedin} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-primary hover:text-secondary transition-colors"
+                              title={`LinkedIn de ${prof.name}`}
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Linkedin size={16} />
+                            </a>
+                          )}
+                        </div>
                       </div>
-                    </Link>
+                    </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
@@ -334,26 +350,42 @@ export function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Link 
-                  to={`/profissional/${prof.id}`}
-                  className="bg-white p-6 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 hover:-translate-y-1 transition-all flex items-center gap-6 block group"
-                >
-                  <div className="w-20 h-20 shrink-0">
+                <div className="bg-white p-6 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex items-center gap-6 group">
+                  <Link 
+                    to={`/profissional/${prof.id}`}
+                    className="w-20 h-20 shrink-0 block hover:opacity-80 transition-opacity"
+                  >
                     <img 
                       src={prof.image} 
                       alt={prof.name} 
                       className="w-full h-full object-cover rounded-full border-2 border-background shadow-sm"
                       referrerPolicy="no-referrer"
                     />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-primary text-base leading-tight mb-1 group-hover:text-secondary transition-colors">{prof.name}</h3>
+                  </Link>
+                  <div className="flex-1">
+                    <Link to={`/profissional/${prof.id}`} className="block">
+                      <h3 className="font-bold text-primary text-base leading-tight mb-1 group-hover:text-secondary transition-colors">{prof.name}</h3>
+                    </Link>
                     <p className="text-footer text-xs font-medium mb-2">{prof.role}</p>
-                    <span className="inline-block px-2 py-0.5 bg-background text-footer/70 text-[10px] font-bold rounded-md">
-                      {prof.credential}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="inline-block px-2 py-0.5 bg-background text-footer/70 text-[10px] font-bold rounded-md">
+                        {prof.credential}
+                      </span>
+                      {prof.linkedin && (
+                        <a 
+                          href={prof.linkedin} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-primary hover:text-secondary transition-colors"
+                          title={`LinkedIn de ${prof.name}`}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Linkedin size={16} />
+                        </a>
+                      )}
+                    </div>
                   </div>
-                </Link>
+                </div>
               </motion.div>
             ))}
           </div>

@@ -1,6 +1,6 @@
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { professionals } from '../data/professionals';
-import { ArrowLeft, Calendar, FileText, Stethoscope } from 'lucide-react';
+import { ArrowLeft, Calendar, FileText, Stethoscope, Linkedin } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export function ProfissionalProfile() {
@@ -48,8 +48,21 @@ export function ProfissionalProfile() {
               <div className="pt-2 sm:pt-20">
                 <h1 className="text-3xl sm:text-4xl font-bold text-primary mb-2 font-serif">{professional.name}</h1>
                 <p className="text-secondary font-medium text-lg mb-3">{professional.role}</p>
-                <div className="inline-block px-3 py-1 bg-background text-footer font-bold text-xs rounded-lg border border-secondary/20 shadow-sm">
-                  {professional.credential}
+                <div className="flex items-center gap-3">
+                  <div className="inline-block px-3 py-1 bg-background text-footer font-bold text-xs rounded-lg border border-secondary/20 shadow-sm">
+                    {professional.credential}
+                  </div>
+                  {professional.linkedin && (
+                    <a
+                      href={professional.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#0077b5] text-white hover:opacity-90 transition-opacity"
+                      title={`LinkedIn de ${professional.name}`}
+                    >
+                      <Linkedin size={16} />
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -61,7 +74,7 @@ export function ProfissionalProfile() {
                     <FileText size={16} className="text-secondary" /> 
                     Sobre o Profissional
                   </h2>
-                  <p className="text-footer leading-relaxed">
+                  <p className="text-footer leading-relaxed whitespace-pre-wrap">
                     {professional.description}
                   </p>
                 </section>

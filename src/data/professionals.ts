@@ -1,62 +1,46 @@
 export const professionals = [
   {
-    id: "dr-roberto-silva",
-    name: "Dr. Roberto Silva",
+    id: "cristiano-bervian",
+    name: "Dr. Cristiano Bervian",
     role: "Médico do Trabalho",
-    credential: "CRM: 12456 - RQE: 1234",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400&h=400",
-    description: "Especialista em medicina ocupacional com mais de 15 anos de experiência clínica. Focado no bem-estar do trabalhador e prevenção de doenças ocupacionais.",
-    specialties: ["Medicina do Trabalho", "Perícia Médica", "Assessoria Ocupacional"],
-    availability: "Segunda a Sexta, 08:00 - 18:00"
+    credential: "CREMERS 24.763",
+    image: "https://media.licdn.com/dms/image/v2/D4D03AQHthKF__FlbVA/profile-displayphoto-crop_800_800/B4DZ277EZiJYAI-/0/1776974320066?e=1780531200&v=beta&t=5JRhaEQDvVGh-NY2S1kOVOBn55aWVPGpeOAGLIA_acI",
+    description: `Graduação em Medicina (UFSM/RS em 1999)\nMedicina do Trabalho (AMB/ANAMT) - RQE 22.386\nMedicna Legal e Perícia Médica (AMB/AB,LPM) - RQE 35.695\nMedicina do Tráfego - (AMB/ABRAMET) - RQE 37.728\nPós-Graduação em Medicina do Trabalho (Estácio de Sá/RJ)\nPós-Graduação em Ergonomia (UEL/PR) - curso acreditado pela ABERGO\nPós-Graduação em Gestão em Saúde (PUC/RS)\nMBA em Saúde Corporativa (Universidade São Camilo)\nMestrando em Atenção Integral à Saúsde (UNIJUI/UNICRUZ)\nMestrando em Prevenção de Riscos Laborais (FUNIBER)\nGestão Integrada: Ambiente, Qualidade e Prevenção (FUNIBER)\nDoutorando em Saúde Pública (FUNIBER)`,
+    specialties: ["Medicina do Trabalho", "Perícia Médica", "Ergonomia", "Saúde Corporativa"],
+    availability: "Segunda a Sexta",
+    linkedin: "https://www.linkedin.com/in/cristianobervian/"
   },
   {
-    id: "dra-ana-luiza-costa",
-    name: "Dra. Ana Luiza Costa",
-    role: "Fonoaudióloga",
-    credential: "CRFa: 76543",
-    image: "/dra-ana.jpg",
-    description: "Fonoaudióloga dedicada à saúde auditiva do trabalhador, com ênfase no Programa de Conservação Auditiva (PCA).",
-    specialties: ["Audiometria Ocupacional", "PCA", "Saúde Auditiva"],
-    availability: "Terças e Quintas, 08:00 - 12:00"
+    id: "eliana-montagner-bervian",
+    name: "Eliana Montagner Bervian",
+    role: "Ergonomista",
+    credential: "CRN2 5224D",
+    image: "https://media.licdn.com/dms/image/v2/C4D03AQHjqqrLTKfOaQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1611611708706?e=1780531200&v=beta&t=CCSf1ATnkr_j_axyn3C6CKEwQPHaZWpHCQxORpoFsWk",
+    description: `Graduação em Nutrição (UNIJUI/RS) em 2001.\nPós-Graduação em Saúde e Segurança do Trabalho (UNYLEYA/DF)\nPós-Graduação em Ergonomia (UEL/PR) - curso acreditado pela ABERGO`,
+    specialties: ["Ergonomia", "Saúde e Segurança do Trabalho", "Nutrição"],
+    availability: "Segunda a Sexta",
+    linkedin: "https://www.linkedin.com/in/eliana-montagner-bervian-258125205/"
   },
   {
-    id: "carlos-mendes",
-    name: "Carlos E. Mendes",
+    id: "jonatan-bervian",
+    name: "Jonatan Bervian",
     role: "Eng. de Seg. do Trabalho",
-    credential: "CREA: 987654",
-    image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=400&h=400",
-    description: "Engenheiro responsável por elaboração de laudos técnicos (LTCAT, insalubridade, periculosidade) e gestão de riscos ocupacionais (PGR).",
-    specialties: ["PGR", "LTCAT", "Laudos de Periculosidade", "Treinamentos de Segurança"],
-    availability: "Segunda a Sexta, 09:00 - 17:00"
+    credential: "CREA RS212574",
+    image: "https://media.licdn.com/dms/image/v2/D4D03AQGqXFBFKEmTpg/profile-displayphoto-crop_800_800/B4DZq4FVpqH0AI-/0/1764024999075?e=1780531200&v=beta&t=03wnvgkviqjbdegPHgi7ZUhBPrhCkhcLYSwfZieqUSA",
+    description: `Graduação em Engenharia Elétrica (UFSM/RS)\nPós-Gradução em Engenharia de Segurança do Trabalho (Universidade Cruzeiro do Sul/SP)`,
+    specialties: ["Engenharia de Segurança do Trabalho", "Engenharia Elétrica", "PGR", "LTCAT"],
+    availability: "Segunda a Sexta",
+    linkedin: "https://www.linkedin.com/in/jonatan-bervian-530371184/"
   },
   {
-    id: "fernanda-oliveira",
-    name: "Fernanda Oliveira",
-    role: "Enfermeira do Trabalho",
-    credential: "COREN: 45678",
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400&h=400",
-    description: "Coordenadora do ambulatório de saúde ocupacional. Responsável pela organização de exames periódicos e campanhas de saúde.",
-    specialties: ["Enfermagem do Trabalho", "Campanhas de Saúde", "Primeiros Socorros"],
-    availability: "Segunda a Sexta, 08:00 - 18:00"
-  },
-  {
-    id: "dr-marcos-vinicius",
-    name: "Dr. Marcos Vinícius",
-    role: "Médico Examinador",
-    credential: "CRM: 87654",
+    id: "marcio-montagner",
+    name: "Márcio Montagner",
+    role: "Eng. de Seg. do Trabalho",
+    credential: "CREA RS140476",
     image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400&h=400",
-    description: "Realiza exames admissionais, demissionais e periódicos. Focado em atestar a aptidão dos colaboradores para suas funções.",
-    specialties: ["Exames Ocupacionais (ASO)", "Clínica Médica"],
-    availability: "Quartas e Sextas, 13:00 - 18:00"
-  },
-  {
-    id: "juliana-santos",
-    name: "Juliana Santos",
-    role: "Psicóloga Ocupacional",
-    credential: "CRP: 34567",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400&h=400",
-    description: "Especialista em saúde mental e avaliação psicossocial para trabalhos críticos, como espaço confinado e trabalho em altura.",
-    specialties: ["Avaliação Psicossocial", "Gestão de Estresse", "Saúde Mental"],
-    availability: "Segunda e Quarta, 09:00 - 15:00"
+    description: `Graduação em Engenharia Civil (UNIJUI/RS)\nPós-Graduação em Engenharia de Segurança do Trabalho (UNIJUI/RS)`,
+    specialties: ["Engenharia de Segurança do Trabalho", "Engenharia Civil", "PGR", "LTCAT"],
+    availability: "Segunda a Sexta",
+    linkedin: "https://www.linkedin.com/in/m%C3%A1rcio-montagner-09b5677a/"
   }
 ];
