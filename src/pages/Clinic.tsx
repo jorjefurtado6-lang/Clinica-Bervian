@@ -1,6 +1,23 @@
-import { Building2, Users, Target } from 'lucide-react';
+import { Building2, Users, Target, Linkedin } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
+import React, { useRef } from 'react';
+import { professionals } from '../data/professionals';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  CarouselDots
+} from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
 
 export function Clinic() {
+  const teamPlugin = useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true })
+  );
+
   return (
     <div className="py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
@@ -42,28 +59,110 @@ export function Clinic() {
 
         <div>
           <h2 className="text-primary font-bold text-sm uppercase tracking-widest mb-8 border-b border-secondary/10 pb-4 inline-block">Nosso Corpo Técnico</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Team Member 1 */}
-            <div className="bg-white p-6 rounded-3xl border border-secondary/10 hover:border-secondary/30 transition-colors shadow-sm">
-              <div className="w-24 h-24 bg-background rounded-full mb-4 flex items-center justify-center text-footer font-bold shadow-inner">Foto</div>
-              <h4 className="font-bold text-primary text-lg">Dr(a). Nome Sobrenome</h4>
-              <p className="text-xs border-b border-secondary/20 pb-2 mb-3 text-secondary font-bold uppercase tracking-wider">Médico(a) do Trabalho</p>
-              <p className="text-sm text-footer">RQE: XXXXX. Especialista em Medicina Ocupacional com X anos de experiência.</p>
-            </div>
-            {/* Team Member 2 */}
-            <div className="bg-white p-6 rounded-3xl border border-secondary/10 hover:border-secondary/30 transition-colors shadow-sm">
-              <div className="w-24 h-24 bg-background rounded-full mb-4 flex items-center justify-center text-footer font-bold shadow-inner">Foto</div>
-              <h4 className="font-bold text-primary text-lg">Nome Sobrenome</h4>
-              <p className="text-xs border-b border-secondary/20 pb-2 mb-3 text-secondary font-bold uppercase tracking-wider">Eng. de Seg. do Trabalho</p>
-              <p className="text-sm text-footer">CREA: XXXXX. Especialista em higiene ocupacional e elaboração de LTCAT.</p>
-            </div>
-            {/* Team Member 3 */}
-            <div className="bg-white p-6 rounded-3xl border border-secondary/10 hover:border-secondary/30 transition-colors shadow-sm">
-              <div className="w-24 h-24 bg-background rounded-full mb-4 flex items-center justify-center text-footer font-bold shadow-inner">Foto</div>
-              <h4 className="font-bold text-primary text-lg">Nome Sobrenome</h4>
-              <p className="text-xs border-b border-secondary/20 pb-2 mb-3 text-secondary font-bold uppercase tracking-wider">Técnico(a) em Enfermagem</p>
-              <p className="text-sm text-footer">Focado em agilidade no atendimento de exames complementares como audiometria e ECG.</p>
-            </div>
+          
+          <div className="md:hidden">
+            <Carousel 
+              plugins={[teamPlugin.current]}
+              className="w-full relative" 
+              opts={{ align: "start", loop: true }}
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {professionals.map((prof, index) => (
+                  <CarouselItem key={prof.id} className="pl-2 md:pl-4 basis-[85%]">
+                    <div className="bg-white p-6 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex items-center gap-6 h-full group relative">
+                      <Link 
+                        to={`/profissional/${prof.id}`}
+                        className="w-20 h-20 shrink-0 block hover:opacity-80 transition-opacity"
+                      >
+                        <img 
+                          src={prof.image} 
+                          alt={prof.name} 
+                          className="w-full h-full object-cover rounded-full border-2 border-background shadow-sm"
+                          referrerPolicy="no-referrer"
+                        />
+                      </Link>
+                      <div className="flex-1">
+                        <Link to={`/profissional/${prof.id}`} className="block">
+                          <h3 className="font-bold text-primary text-base leading-tight mb-1 group-hover:text-secondary transition-colors">{prof.name}</h3>
+                        </Link>
+                        <p className="text-footer text-xs font-medium mb-2">{prof.role}</p>
+                        <div className="flex items-center gap-2">
+                          <span className="inline-block px-2 py-0.5 bg-background text-footer/70 text-[10px] font-bold rounded-md">
+                            {prof.credential}
+                          </span>
+                          {prof.linkedin && (
+                            <a 
+                              href={prof.linkedin} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-primary hover:text-secondary transition-colors"
+                              title={`LinkedIn de ${prof.name}`}
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Linkedin size={16} />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="flex items-center justify-center gap-4 mt-8">
+                <CarouselPrevious className="static translate-y-0" />
+                <CarouselDots />
+                <CarouselNext className="static translate-y-0" />
+              </div>
+            </Carousel>
+          </div>
+
+          <div className="hidden md:grid md:grid-cols-2 gap-6 sm:gap-8">
+            {professionals.map((prof, index) => (
+              <motion.div 
+                key={prof.id}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div className="bg-white p-6 rounded-3xl shadow-sm border border-secondary/10 hover:border-secondary/30 transition-all flex items-center gap-6 group">
+                  <Link 
+                    to={`/profissional/${prof.id}`}
+                    className="w-20 h-20 shrink-0 block hover:opacity-80 transition-opacity"
+                  >
+                    <img 
+                      src={prof.image} 
+                      alt={prof.name} 
+                      className="w-full h-full object-cover rounded-full border-2 border-background shadow-sm"
+                      referrerPolicy="no-referrer"
+                    />
+                  </Link>
+                  <div className="flex-1">
+                    <Link to={`/profissional/${prof.id}`} className="block">
+                      <h3 className="font-bold text-primary text-base leading-tight mb-1 group-hover:text-secondary transition-colors">{prof.name}</h3>
+                    </Link>
+                    <p className="text-footer text-xs font-medium mb-2">{prof.role}</p>
+                    <div className="flex items-center gap-2">
+                      <span className="inline-block px-2 py-0.5 bg-background text-footer/70 text-[10px] font-bold rounded-md">
+                        {prof.credential}
+                      </span>
+                      {prof.linkedin && (
+                        <a 
+                          href={prof.linkedin} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-primary hover:text-secondary transition-colors"
+                          title={`LinkedIn de ${prof.name}`}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Linkedin size={16} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
