@@ -10,7 +10,7 @@ export const professionals = [
     role: "Médico do Trabalho",
     credential: "CREMERS 24.763",
     image: cristianoImage,
-    description: `Graduação em Medicina (UFSM/RS em 1999)\nMedicina do Trabalho (AMB/ANAMT) - RQE 22.386\nMedicna Legal e Perícia Médica (AMB/AB,LPM) - RQE 35.695\nMedicina do Tráfego - (AMB/ABRAMET) - RQE 37.728\nPós-Graduação em Medicina do Trabalho (Estácio de Sá/RJ)\nPós-Graduação em Ergonomia (UEL/PR) - curso acreditado pela ABERGO\nPós-Graduação em Gestão em Saúde (PUC/RS)\nMBA em Saúde Corporativa (Universidade São Camilo)\nMestrando em Atenção Integral à Saúsde (UNIJUI/UNICRUZ)\nMestrando em Prevenção de Riscos Laborais (FUNIBER)\nGestão Integrada: Ambiente, Qualidade e Prevenção (FUNIBER)\nDoutorando em Saúde Pública (FUNIBER)`,
+    description: `Graduação em Medicina (UFSM/RS em 1999)\nMedicina do Trabalho (AMB/ANAMT) - RQE 22.386\nMedicna Legal e Perícia Médica (AMB/AB,LPM) - RQE 35.695\nMedicina do Tráfego - (AMB/ABRAMET) - RQE 37.728\nPós-Graduação em Medicina do Trabalho (Estácio de Sá/RJ)\nPós-Graduação em Ergonomia (UEL/PR) - curso acreditado pela ABERGO\nPós-Graduação em Gestão em Saúde (PUC/RS)\nMBA em Saúde Corporativa (Universidade São Camilo)\nMestre em Atenção Integral à Saúde (UNIJUI/UNICRUZ)\nMáster em Prevenção de Riscos Laborais (FUNIBER)\nMáster em Gestão Integrada: Ambiente, Qualidade e Prevenção (FUNIBER)\nDoutorando em Saúde Pública (FUNIBER)`,
     specialties: ["Medicina do Trabalho", "Perícia Médica", "Ergonomia", "Saúde Corporativa"],
     availability: "Segunda a Sexta",
     linkedin: "https://www.linkedin.com/in/cristianobervian/"

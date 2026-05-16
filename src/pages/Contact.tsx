@@ -65,6 +65,9 @@ export function Contact() {
                     <option>Agendamento Avulso de Exames</option>
                     <option>Elaboração de LTCAT</option>
                     <option>Treinamentos</option>
+                    <option>Ergonomia</option>
+                    <option>Avaliação de Riscos Psicossociais (NR1)</option>
+                    <option>Assistência Técnica em Processos Trabalhistas</option>
                     <option>Outros</option>
                   </select>
                 </div>
