@@ -143,7 +143,7 @@ export function Services() {
                 <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento do uso e conservação do EPI;</li>
                 <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento de primeiros socorros;</li>
                 <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento sobre agrotóxicos;</li>
-                <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento para serviços em eletricidade;</li>
+                <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento para serviços em eletricidade (NR10);</li>
                 <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento para movimentação de materiais;</li>
                 <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento dos operadores de máquinas;</li>
                 <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento de trabalho em Espaço Confinado (NR33);</li>
@@ -276,7 +276,7 @@ export function Services() {
                 <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento do uso e conservação do EPI;</li>
                 <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento de primeiros socorros;</li>
                 <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento sobre agrotóxicos;</li>
-                <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento para serviços em eletricidade;</li>
+                <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento para serviços em eletricidade (NR10);</li>
                 <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento para movimentação de materiais;</li>
                 <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento dos operadores de máquinas;</li>
                 <li className="flex items-start gap-2"><div className="w-2 h-2 bg-secondary rounded-full mt-2 shrink-0"/> Treinamento de trabalho em Espaço Confinado (NR33);</li>

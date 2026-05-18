@@ -15,6 +15,8 @@ import { Contact } from './pages/Contact';
 import { ClientArea } from './pages/ClientArea';
 import { ProfissionalProfile } from './pages/ProfissionalProfile';
 import { Solutions } from './pages/Solutions';
+import { PrivacyPolicy } from './pages/PrivacyPolicy';
+import { TermsOfService } from './pages/TermsOfService';
 import { AdminLayout } from './pages/admin/AdminLayout';
 import { AdminLogin } from './pages/admin/AdminLogin';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
@@ -43,6 +45,8 @@ export default function App() {
             <Route path="/contato" element={<Contact />} />
             <Route path="/area-cliente" element={<ClientArea />} />
             <Route path="/profissional/:id" element={<ProfissionalProfile />} />
+            <Route path="/privacidade" element={<PrivacyPolicy />} />
+            <Route path="/termos" element={<TermsOfService />} />
           </Route>
 
           {/* Admin Routes */}
