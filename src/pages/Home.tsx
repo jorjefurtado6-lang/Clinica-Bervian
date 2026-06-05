@@ -112,12 +112,13 @@ export function Home() {
                 >
                   Solicitar Orçamento
                 </Link>
-                <Link
-                  to="/area-cliente"
+                <a
+                  href="https://wa.me/5555991679733"
+                  target="_blank" rel="noopener noreferrer"
                   className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border-2 border-secondary bg-white px-8 py-4 text-base font-bold text-secondary hover:bg-gray-50 transition-colors"
                 >
                   WhatsApp
-                </Link>
+                </a>
               </div>
               
               <div className="grid grid-cols-3 gap-6 pt-12 mt-12 border-t border-secondary/20 max-w-2xl">

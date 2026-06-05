@@ -139,14 +139,10 @@ export function ClientArea() {
             <p className="text-sm text-footer mb-8">Acesse para gerenciar agendamentos, baixar ASOs e acompanhar envios do eSocial.</p>
             
             <a 
-              href="#" 
+              href="https://core.sistemaeso.com.br/account/login?ReturnUrl=%2Fcompany%2Fworkersplanning%3Fcompanyid%3D17599256" 
               target="_blank" 
               rel="noopener noreferrer"
               className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-sm hover:bg-primary/90 transition-all"
-              onClick={(e) => {
-                e.preventDefault();
-                alert('Em um ambiente de produção, isto abriria a URL do Sistema ESO: https://app.eso.com.br');
-              }}
             >
               Acessar Sistema ESO <ExternalLink size={18} />
             </a>
