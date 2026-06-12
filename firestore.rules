@@ -51,7 +51,7 @@ service cloud.firestore {
     }
     
     match /admins/{userId} {
-      allow read: if isAdmin();
+      allow read: if (isSignedIn() && request.auth.uid == userId) || isAdmin();
     }
     
     match /posts/{postId} {
