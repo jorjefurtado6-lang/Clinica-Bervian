@@ -76,7 +76,7 @@ export function PrivacyPolicy() {
             <h2 className="text-2xl font-bold text-primary mt-8 mb-4">7. Contato</h2>
             <p>
               Se você tiver dúvidas sobre esta Política de Privacidade ou sobre o tratamento de seus dados, entre em contato conosco através do e-mail:{' '}
-              <a href="mailto:clinicabervian@gmail.com" className="text-secondary hover:underline">clinicabervian@gmail.com</a>.
+              <a href="mailto:secretaria@clinicabervian.com.br" className="text-secondary hover:underline">secretaria@clinicabervian.com.br</a>.
             </p>
           </div>
         </motion.div>

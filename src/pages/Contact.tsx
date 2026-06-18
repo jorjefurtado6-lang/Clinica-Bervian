@@ -187,7 +187,7 @@ export function Contact() {
 
               <div className="mt-8 pt-8 border-t border-secondary/20">
                 <p className="text-xs font-bold text-secondary uppercase tracking-widest mb-2">E-mail Direto</p>
-                <a href="mailto:clinicabervian@gmail.com" className="text-primary hover:underline font-medium">clinicabervian@gmail.com</a>
+                <a href="mailto:secretaria@clinicabervian.com.br" className="text-primary hover:underline font-medium">secretaria@clinicabervian.com.br</a>
               </div>
             </div>
           </div>

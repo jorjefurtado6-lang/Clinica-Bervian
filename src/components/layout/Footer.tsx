@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Instagram, HeartPulse } from 'lucide-react';
+import { MapPin, Phone, Mail, Instagram, MessageCircle } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -17,10 +17,10 @@ export function Footer() {
             </p>
             <div className="flex space-x-4 pt-4">
               <a href="https://instagram.com/clinicabervian" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-footer transition-colors text-white">
-                <span className="text-[10px] font-bold">IG</span>
+                <Instagram size={16} />
               </a>
               <a href="https://wa.me/5555991679733" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-footer transition-colors text-white">
-                <span className="text-[10px] font-bold">WA</span>
+                <MessageCircle size={16} />
               </a>
             </div>
           </div>
@@ -62,7 +62,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-secondary shrink-0" />
-                <a href="mailto:clinicabervian@gmail.com" className="text-xs text-background/70 hover:text-white transition-colors font-light">clinicabervian@gmail.com</a>
+                <a href="mailto:secretaria@clinicabervian.com.br" className="text-xs text-background/70 hover:text-white transition-colors font-light">secretaria@clinicabervian.com.br</a>
               </li>
             </ul>
           </div>
